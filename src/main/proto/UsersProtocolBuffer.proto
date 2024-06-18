@@ -1,0 +1,40 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option java_package = "com.example.javaSpringGrpc";
+
+message CreateUserRequest{
+  string email = 1;
+  string fullName = 2;
+}
+
+message UpdateUserRequest{
+  uint64 id = 1;
+  string email = 2;
+  string fullName = 3;
+}
+
+message UserByIdRequest{
+  uint64 id = 1;
+}
+
+message UserByEmailRequest{
+  string email = 1;
+}
+
+message UserDto{
+  uint64 id = 1;
+  string email = 2;
+  string fullName = 3;
+}
+
+message UserResponse{
+  UserDto user = 1;
+}
+
+service UsersProtocolBuffer{
+    rpc findById(UserByIdRequest) returns (UserResponse);
+    rpc findByEmail(UserByEmailRequest) returns (UserResponse);
+    rpc save(CreateUserRequest) returns (google.protobuf.Empty);
+    rpc update(UpdateUserRequest) returns (google.protobuf.Empty);
+    rpc deleteById(UserByIdRequest) returns (google.protobuf.Empty);
+}
